@@ -15,32 +15,41 @@ func createMyRender() multitemplate.Renderer {
 
 func index(c *gin.Context) {
 	session := sessions.Default(c)
-	token := session.Get("userToken")
-	if token == nil {
-		token = RandomString(32)
-		session.Set("userToken", token)
+	userToken := session.Get("userToken")
+	if userToken == nil {
+		userToken = RandomString(32)
+		session.Set("userToken", userToken)
+		genNewToken(userToken.(string))
 		err := session.Save()
 		if err != nil {
 			log.Println(err)
 			return
 		}
 	}
-	c.HTML(200, "index", gin.H{"title": "首頁", "token": token})
+	user := userTokens[userToken.(string)]
+	if user == nil {
+		user = genNewToken(userToken.(string))
+	}
+	c.HTML(200, "index", gin.H{"title": "首頁", "token": user.token})
 }
 
 func getNewToken(c *gin.Context) {
 	session := sessions.Default(c)
-	token := session.Get("userToken")
-	if token == nil {
-		c.JSON(200, gin.H{"status": false, "msg": "更新失敗"})
+	userToken := session.Get("userToken")
+	statusMap := make(map[string]any)
+	if userToken == nil {
+		statusMap["status"] = false
+		statusMap["msg"] = "更新失敗"
+		c.JSON(401, statusMap)
 		return
 	}
-	session.Set("userToken", nil)
-	err := session.Save()
-	if err != nil {
-		log.Println(err)
-		c.JSON(200, gin.H{"status": false, "msg": "更新失敗"})
+	if updateToken(userToken.(string)) {
+		statusMap["status"] = true
+		statusMap["msg"] = "更新成功"
+		c.JSON(200, statusMap)
 		return
 	}
-	c.JSON(200, gin.H{"status": true, "msg": "成功更新Token"})
+	statusMap["status"] = false
+	statusMap["msg"] = "每一分鐘只能請求一次新的Token"
+	c.JSON(401, statusMap)
 }

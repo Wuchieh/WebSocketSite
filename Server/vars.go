@@ -6,8 +6,9 @@ import (
 )
 
 var (
-	r       = gin.Default()
-	setting Setting
+	r          = gin.Default()
+	setting    Setting
+	userTokens = make(map[string]*UserToken)
 )
 
 type Setting struct {

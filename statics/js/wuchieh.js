@@ -2,6 +2,7 @@ let clicks = 0;
 
 function getNewToken() {
     if (clicks === 0) {
+        clicks++;
         const request = new XMLHttpRequest();
         request.open("POST", "/api/GetNewToken");
         request.onload = function () {

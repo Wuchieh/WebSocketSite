@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/otherFunc.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/otherFunc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/tokenRecycle.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/tokenRecycle.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/vars.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/vars.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/views.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/views.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/js/wuchieh.js" beforeDir="false" afterPath="$PROJECT_DIR$/statics/js/wuchieh.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +92,8 @@
     <MESSAGE value="module github.com/Wuchieh/WebSocketSite" />
     <MESSAGE value="Gen Token" />
     <MESSAGE value="setFull" />
-    <option name="LAST_COMMIT_MESSAGE" value="setFull" />
+    <MESSAGE value="update README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="update README.md" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
