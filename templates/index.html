@@ -1,0 +1,27 @@
+{{ template "base.html" }}
+{{ define "head" }}
+    <style>
+        html, body {
+            font-family: Nunito, serif;
+            height: 100%;
+            width: 100%;
+            display: flex;
+        }
+
+        body {
+            align-items: center;
+        }
+    </style>
+    <script src="/statics/js/wuchieh.js"></script>
+{{ end }}
+
+{{ define "body" }}
+    <div class="container text-center">
+        <div><label class="fs-1">Token: {{ .token }}</label></div>
+        <button class="btn btn-success mt-3" onclick="getNewToken()">取得新Token</button>
+    </div>
+{{ end }}
+
+{{ define "footer" }}
+
+{{ end }}
