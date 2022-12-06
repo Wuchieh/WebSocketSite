@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
+	"github.com/gin-gonic/gin"
 	"log"
 	"math/rand"
 	"os"
@@ -12,31 +13,56 @@ import (
 
 func init() {
 	rand.Seed(time.Now().Unix())
-	file, err := os.ReadFile("setting.json")
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	err = json.Unmarshal(file, &setting)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	bytes, err := os.ReadFile("tokens.json")
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	err = json.Unmarshal(bytes, &userTokens)
-	if err != nil {
-		log.Println(err)
-		return
+	func() {
+		for i := 0; i < 2; i++ {
+			file, err := os.ReadFile("setting.json")
+			if err != nil {
+				log.Println(err)
+				err := os.WriteFile("setting.json", []byte("{\n  \"serverIP\": \"127.0.0.1\",\n  \"port\": \"8080\",\n  \"saveTime\": 60,\n  \"checkExpiredTime\": 60,\n  \"mode\": 0\n}"), 0666)
+				if err != nil {
+					log.Println(err)
+				}
+				continue
+			}
+			err = json.Unmarshal(file, &setting)
+			if err != nil {
+				log.Println(err)
+				continue
+			}
+		}
+	}()
+	func() {
+		for i := 0; i < 2; i++ {
+			bytes, err := os.ReadFile("tokens.json")
+			if err != nil {
+				log.Println(err)
+				err := os.WriteFile("tokens.json", []byte("{}"), 0666)
+				if err != nil {
+					log.Println(err)
+				}
+				continue
+			}
+			err = json.Unmarshal(bytes, &userTokens)
+			if err != nil {
+				log.Println(err)
+				continue
+			}
+		}
+	}()
+	switch setting.Mode {
+	case 0: // debug
+		gin.SetMode(gin.DebugMode)
+	case 1: // release
+		gin.SetMode(gin.ReleaseMode)
+	case 2: // test
+		gin.SetMode(gin.TestMode)
 	}
 	tokenRecycle()
 	tokenSave()
 }
 
 func Server() error {
+	r = gin.Default()
 	// 建立 store
 	store := cookie.NewStore([]byte("secret"))
 	// session 的名稱會在 browser 變成 cookie 的 key

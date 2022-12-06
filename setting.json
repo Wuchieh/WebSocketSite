@@ -2,5 +2,6 @@
   "serverIP": "127.0.0.1",
   "port": "8080",
   "saveTime": 60,
-  "checkExpiredTime": 60
+  "checkExpiredTime": 60,
+  "mode": 0
 }

@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	r          = gin.Default()
+	r          *gin.Engine
 	setting    Setting
 	userTokens = make(map[string]*UserToken)
 )
@@ -16,6 +16,7 @@ type Setting struct {
 	Port             string `json:"port"`
 	SaveTime         int    `json:"saveTime"`
 	CheckExpiredTime int    `json:"checkExpiredTime"`
+	Mode             int    `json:"mode"`
 }
 
 type UserToken struct {

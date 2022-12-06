@@ -16,6 +16,43 @@
 {{ end }}
 
 {{ define "body" }}
+    <!-- OffCanvas -->
+    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offCanvasTestModel"
+         aria-labelledby="offCanvasTestModelLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offCanvasTestModelLabel">單元測試</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <hr>
+        <div class="offcanvas-body">
+            <div class="container-fluid">
+                <h6>ws連線測試 <p id="testConnectStatus" class="text-danger mt-1">尚未連線</p></h6>
+                <div class="border border-1 rounded-2 h-100">
+                    <div class="m-3">
+                        <div id="testEnterIP" style="display: block">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="testURL" placeholder="URL" value="ws://127.0.0.1:8080/ws">
+                                <label for="testURL">URL</label>
+                                <button class="btn btn-primary mt-2" onclick="testWsConnect()">連線</button>
+                            </div>
+                        </div>
+                        <div id="testSendMsg" style="display: none">
+                            <div id="testReplyMsg" class="border border-1 navbar-nav-scroll mb-2" style="height: 5rem">
+                            </div>
+                            <div class="form-floating">
+                                    <input type="text" class="form-control" id="testMsgInput"
+                                              placeholder="Username">
+                                <label for="testMsgInput">訊息</label>
+                            </div>
+                            <button id="testWsSendMsg" class="btn btn-primary mt-2">傳送</button>
+                            <button id="testWsConnectClose" class="btn btn-danger mt-2">關閉連線</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end -->
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -35,11 +72,22 @@
             </div>
         </div>
     </div>
+    <!-- end -->
+
     <div class="container-fluid text-center">
-        <div><label class="fs-1">Token: {{ .token }}</label></div>
-        <button type="button" class="btn btn-success mt-3 fs-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            取得新Token
-        </button>
+        <div><label class="fs-1" onclick="showTestButton()">Token: <a>{{ .token }}</a></label></div>
+        <div class="mt-3">
+            <button type="button" class="btn btn-success fs-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                取得新Token
+            </button>
+            <div id="testButtons" class="mt-3" style="display: none">
+                <button id="testButton" class="btn btn-primary fs-3" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offCanvasTestModel"
+                        aria-controls="offCanvasTestModel">
+                    單元測試
+                </button>
+            </div>
+        </div>
     </div>
 {{ end }}
 

@@ -42,6 +42,14 @@ func tokenSave() {
 	go func() {
 		for {
 			time.Sleep(time.Duration(setting.SaveTime) * time.Second)
+			if len(userTokens) < 1 {
+				err := os.WriteFile("tokens.json", []byte("{}"), 0666)
+				if err != nil {
+					log.Println()
+					return
+				}
+				break
+			}
 			bytes, err := json.MarshalIndent(userTokens, "", "  ")
 			if err != nil {
 				log.Println()
