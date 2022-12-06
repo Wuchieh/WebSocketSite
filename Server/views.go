@@ -58,6 +58,5 @@ func myToken(c *gin.Context) {
 	session := sessions.Default(c)
 	userToken := session.Get("userToken")
 	a := userTokens[userToken.(string)]
-
 	c.JSON(200, a)
 }
