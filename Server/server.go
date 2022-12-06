@@ -22,7 +22,18 @@ func init() {
 		log.Println(err)
 		return
 	}
+	bytes, err := os.ReadFile("tokens.json")
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	err = json.Unmarshal(bytes, &userTokens)
+	if err != nil {
+		log.Println(err)
+		return
+	}
 	tokenRecycle()
+	tokenSave()
 }
 
 func Server() error {

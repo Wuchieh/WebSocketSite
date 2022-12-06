@@ -1,14 +1,21 @@
 package Server
 
 import (
-	"fmt"
+	"encoding/json"
+	"log"
+	"os"
 	"time"
 )
 
 func tokenRecycle() {
+	if setting.CheckExpiredTime > 0 {
+		log.Println("已啟用定時回收Token")
+	} else {
+		return
+	}
 	go func() {
 		for {
-			time.Sleep(1 * time.Minute)
+			time.Sleep(time.Duration(setting.CheckExpiredTime) * time.Second)
 			timeNow := time.Now().Unix()
 			var deleteTokenList []string
 			for i, v := range userTokens {
@@ -19,7 +26,33 @@ func tokenRecycle() {
 			for _, v := range deleteTokenList {
 				delete(userTokens, v)
 			}
-			fmt.Println("已經刪除", len(deleteTokenList), "個過期Token")
+			if len(deleteTokenList) > 0 {
+				log.Println("已經刪除", len(deleteTokenList), "個過期Token")
+			}
+		}
+	}()
+}
+
+func tokenSave() {
+	if setting.SaveTime > 0 {
+		log.Println("已啟用定時儲存Token")
+	} else {
+		return
+	}
+	go func() {
+		for {
+			time.Sleep(time.Duration(setting.SaveTime) * time.Second)
+			bytes, err := json.MarshalIndent(userTokens, "", "  ")
+			if err != nil {
+				log.Println()
+				return
+			}
+			err = os.WriteFile("tokens.json", bytes, 0666)
+			if err != nil {
+				log.Println()
+				return
+			}
+			log.Println("定時存檔完成")
 		}
 	}()
 }

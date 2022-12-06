@@ -13,19 +13,21 @@ func RandomString(n int) string {
 		b[i] = letter[rand.Intn(len(letter))]
 	}
 	return string(b)
+	//a := string(b)
+	//return &a
 }
 
 func genNewToken(session string) *UserToken {
 	if token, ok := userTokens[session]; ok {
 		token.UpdateTime = time.Now()
 		token.ExpiredTime = time.Now().Add(time.Hour)
-		token.token = RandomString(32)
+		token.Token = RandomString(32)
 	} else {
 		userToken := UserToken{
 			CreateTime:  time.Now(),
 			UpdateTime:  time.Now(),
 			ExpiredTime: time.Now().Add(time.Hour),
-			token:       RandomString(32),
+			Token:       RandomString(32),
 		}
 		userTokens[session] = &userToken
 	}
@@ -39,7 +41,7 @@ func updateToken(session string) bool {
 		}
 		token.UpdateTime = time.Now()
 		token.ExpiredTime = time.Now().Add(time.Hour)
-		token.token = RandomString(32)
+		token.Token = RandomString(32)
 	} else {
 		if genNewToken(session) == nil {
 			return false

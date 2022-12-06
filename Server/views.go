@@ -30,7 +30,7 @@ func index(c *gin.Context) {
 	if user == nil {
 		user = genNewToken(userToken.(string))
 	}
-	c.HTML(200, "index", gin.H{"title": "首頁", "token": user.token})
+	c.HTML(200, "index", gin.H{"title": "首頁", "token": user.Token})
 }
 
 func getNewToken(c *gin.Context) {
@@ -50,6 +50,14 @@ func getNewToken(c *gin.Context) {
 		return
 	}
 	statusMap["status"] = false
-	statusMap["msg"] = "每一分鐘只能請求一次新的Token"
+	statusMap["msg"] = "每分鐘只能請求一次新的Token"
 	c.JSON(401, statusMap)
+}
+
+func myToken(c *gin.Context) {
+	session := sessions.Default(c)
+	userToken := session.Get("userToken")
+	a := userTokens[userToken.(string)]
+
+	c.JSON(200, a)
 }

@@ -12,13 +12,15 @@ var (
 )
 
 type Setting struct {
-	ServerIP string `json:"serverIP"`
-	Port     string `json:"port"`
+	ServerIP         string `json:"serverIP"`
+	Port             string `json:"port"`
+	SaveTime         int    `json:"saveTime"`
+	CheckExpiredTime int    `json:"checkExpiredTime"`
 }
 
 type UserToken struct {
 	CreateTime  time.Time
 	UpdateTime  time.Time
 	ExpiredTime time.Time
-	token       string
+	Token       string
 }
