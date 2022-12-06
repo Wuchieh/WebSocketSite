@@ -2,7 +2,7 @@
 {{ define "head" }}
     <style>
         html, body {
-            font-family: Nunito, serif;
+            font-family: Nunito-Bold, GenJyuuGothicL, serif;
             height: 100%;
             width: 100%;
             display: flex;
@@ -16,9 +16,30 @@
 {{ end }}
 
 {{ define "body" }}
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">取得新的Token</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    若取得新的Token目前的Token將會失效
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="getNewToken()">確定</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container text-center">
         <div><label class="fs-1">Token: {{ .token }}</label></div>
-        <button class="btn btn-success mt-3" onclick="getNewToken()">取得新Token</button>
+        <button type="button" class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            取得新Token
+        </button>
     </div>
 {{ end }}
 
