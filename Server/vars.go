@@ -2,13 +2,15 @@ package Server
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 	"time"
 )
 
 var (
-	r          *gin.Engine
-	setting    Setting
-	userTokens = make(map[string]*UserToken)
+	r               *gin.Engine
+	setting         Setting
+	userTokens      = make(map[string]*UserToken)
+	wsConnectGroups = make(map[string][]*UserToken)
 )
 
 type Setting struct {
@@ -24,4 +26,5 @@ type UserToken struct {
 	UpdateTime  time.Time
 	ExpiredTime time.Time
 	Token       string
+	ws          *websocket.Conn
 }
