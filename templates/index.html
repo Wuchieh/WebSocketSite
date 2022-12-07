@@ -92,5 +92,14 @@
 {{ end }}
 
 {{ define "footer" }}
-
+<script>
+    let URLInput= document.getElementById("testURL");
+    let wsUrl = "";
+    if (location.protocol==="http:"){
+        wsUrl += "ws://"
+    }else{
+        wsUrl+="wss://"
+    }
+    URLInput.value =wsUrl+location.host+"/ws"
+</script>
 {{ end }}

@@ -57,8 +57,7 @@ function testWsConnect() {
 
     ws.onmessage = function (e) {
         let message = e.data;
-
-        ReplyMsg.innerHTML = "<div>" + message + "</div>";
+        ReplyMsg.insertAdjacentHTML("beforeend","<div>" + message + "</div>")
         ReplyMsg.scrollTo(0, ReplyMsg.scrollHeight);
     }
 
