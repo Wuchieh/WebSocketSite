@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="修正Token指針nil問題&#10;新增測試單元 點集Token 12下觸發">
+    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="新增斷線處理">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/otherFunc.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/otherFunc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/vars.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/vars.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/views.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/views.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setting.json" beforeDir="false" afterPath="$PROJECT_DIR$/setting.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +93,8 @@
     <MESSAGE value="update README.md" />
     <MESSAGE value="修正存檔錯誤" />
     <MESSAGE value="測試" />
-    <option name="LAST_COMMIT_MESSAGE" value="測試" />
+    <MESSAGE value="新增斷線處理" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增斷線處理" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

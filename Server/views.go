@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
+	"time"
 )
 
 func createMyRender() multitemplate.Renderer {
@@ -81,6 +82,8 @@ func SocketHandler(c *gin.Context) {
 	if ok {
 	} else {
 		_ = ws.WriteMessage(1, []byte("登入失敗，請重新連線"))
+		time.Sleep(5 * time.Second)
+		ws.Close()
 		return
 	}
 	_ = ws.WriteMessage(1, []byte("登入成功"))

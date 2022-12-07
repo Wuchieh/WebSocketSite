@@ -18,6 +18,7 @@ type Setting struct {
 	Port             string `json:"port"`
 	SaveTime         int    `json:"saveTime"`
 	CheckExpiredTime int    `json:"checkExpiredTime"`
+	ExpiredTime      int    `json:"expiredTime"`
 	Mode             int    `json:"mode"`
 }
 
@@ -27,4 +28,6 @@ type UserToken struct {
 	ExpiredTime time.Time
 	Token       string
 	ws          *websocket.Conn
+	inGroup     bool
+	Group       string
 }

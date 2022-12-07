@@ -23,13 +23,13 @@ func RandomString(n int) string {
 func genNewToken(session string) *UserToken {
 	if token, ok := userTokens[session]; ok {
 		token.UpdateTime = time.Now()
-		token.ExpiredTime = time.Now().Add(time.Hour)
+		token.ExpiredTime = time.Now().Add(time.Minute * time.Duration(setting.ExpiredTime))
 		token.Token = RandomString(32)
 	} else {
 		userToken := UserToken{
 			CreateTime:  time.Now(),
 			UpdateTime:  time.Now(),
-			ExpiredTime: time.Now().Add(time.Hour),
+			ExpiredTime: time.Now().Add(time.Minute * time.Duration(setting.ExpiredTime)),
 			Token:       RandomString(32),
 		}
 		userTokens[session] = &userToken
@@ -43,7 +43,7 @@ func updateToken(session string) bool {
 			return false
 		}
 		token.UpdateTime = time.Now()
-		token.ExpiredTime = time.Now().Add(time.Hour)
+		token.ExpiredTime = time.Now().Add(time.Minute * time.Duration(setting.ExpiredTime))
 		token.Token = RandomString(32)
 	} else {
 		if genNewToken(session) == nil {
@@ -58,7 +58,7 @@ func wsLogin(ws *websocket.Conn, login *struct {
 	Group string `json:"Group"`
 }) bool {
 	userToken, ok := tokenCheck(login.Token)
-	if !ok {
+	if !ok || userToken.inGroup {
 		return false
 	}
 	err := wsConnectGroupJoin(ws, userToken, login.Group)
@@ -77,6 +77,8 @@ func wsConnectGroupJoin(ws *websocket.Conn, token *UserToken, g string) error {
 		wsConnectGroups[g] = append(wsConnectGroups[g], token)
 	}
 	token.ws = ws
+	token.inGroup = true
+	token.Group = g
 	return nil
 }
 
@@ -110,6 +112,8 @@ func wsLoginAuthentication(ws *websocket.Conn) (bool, string) {
 		if login.Token != "" && login.Group != "" {
 			if wsLogin(ws, login) {
 				return true, login.Group
+			} else {
+				return false, ""
 			}
 		}
 		_ = ws.WriteMessage(1, []byte("登入失敗請重新嘗試"))
@@ -120,7 +124,10 @@ func wsLoginAuthentication(ws *websocket.Conn) (bool, string) {
 func wsLogout(ws *websocket.Conn, group string) {
 	for i, v := range wsConnectGroups[group] {
 		if v.ws == ws {
+			wsConnectGroups[group][i].inGroup = false
+			wsConnectGroups[group][i].Group = ""
 			wsConnectGroups[group] = append(wsConnectGroups[group][:i], wsConnectGroups[group][i+1:]...)
+			break
 		}
 	}
 	if len(wsConnectGroups[group]) < 1 {

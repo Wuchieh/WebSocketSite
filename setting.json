@@ -3,5 +3,6 @@
   "port": "8080",
   "saveTime": 60,
   "checkExpiredTime": 60,
+  "expiredTime": 120,
   "mode": 0
 }
