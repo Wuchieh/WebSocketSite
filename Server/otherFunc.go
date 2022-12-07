@@ -89,7 +89,7 @@ func tokenCheck(token string) (*UserToken, bool) {
 	return nil, false
 }
 
-func wsLoginAuthentication(ws *websocket.Conn) bool {
+func wsLoginAuthentication(ws *websocket.Conn) (bool, string) {
 	for i := 0; i < 3; i++ {
 		msgType, msg, err := ws.ReadMessage()
 		if err != nil || msgType == -1 {
@@ -109,21 +109,21 @@ func wsLoginAuthentication(ws *websocket.Conn) bool {
 		}
 		if login.Token != "" && login.Group != "" {
 			if wsLogin(ws, login) {
-				return true
+				return true, login.Group
 			}
 		}
 		_ = ws.WriteMessage(1, []byte("登入失敗請重新嘗試"))
 	}
-	return false
+	return false, ""
 }
 
-func wsLogout(ws *websocket.Conn) {
-	for s, tokens := range wsConnectGroups {
-		for i, token := range tokens {
-			if token.ws == ws {
-				tokens = append(tokens[:i], tokens[i+1:]...)
-				break
-			}
+func wsLogout(ws *websocket.Conn, group string) {
+	for i, v := range wsConnectGroups[group] {
+		if v.ws == ws {
+			wsConnectGroups[group] = append(wsConnectGroups[group][:i], wsConnectGroups[group][i+1:]...)
 		}
+	}
+	if len(wsConnectGroups[group]) < 1 {
+		delete(wsConnectGroups, group)
 	}
 }

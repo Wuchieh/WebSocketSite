@@ -77,19 +77,20 @@ func SocketHandler(c *gin.Context) {
 		log.Println(err)
 		return
 	}
-
-	defer func(ws *websocket.Conn) {
-		err := ws.Close()
-		if err != nil {
-			return
-		}
-	}(ws)
-	if wsLoginAuthentication(ws) {
+	ok, group := wsLoginAuthentication(ws)
+	if ok {
 	} else {
 		_ = ws.WriteMessage(1, []byte("登入失敗，請重新連線"))
 		return
 	}
 	_ = ws.WriteMessage(1, []byte("登入成功"))
+	defer func(ws *websocket.Conn) {
+		wsLogout(ws, group)
+		err := ws.Close()
+		if err != nil {
+			return
+		}
+	}(ws)
 	for {
 		msgType, msg, err := ws.ReadMessage()
 		if err != nil || msgType == -1 {
