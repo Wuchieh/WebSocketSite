@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="新增斷線處理">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/otherFunc.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/otherFunc.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/vars.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/vars.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/views.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/views.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setting.json" beforeDir="false" afterPath="$PROJECT_DIR$/setting.json" afterDir="false" />
+    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="新增限制 一個token只能進行一個連線">
+      <change beforePath="$PROJECT_DIR$/Server/tokenRecycle.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/tokenRecycle.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +89,8 @@
     <MESSAGE value="修正存檔錯誤" />
     <MESSAGE value="測試" />
     <MESSAGE value="新增斷線處理" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增斷線處理" />
+    <MESSAGE value="新增限制 一個token只能進行一個連線" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增限制 一個token只能進行一個連線" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
