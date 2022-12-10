@@ -44,7 +44,7 @@ function testWsConnect() {
         SendMsg.style.display = "block";
         ConnectStatus.textContent = "已連線";
         ConnectStatus.className = "text-success mt-1";
-        ReplyMsg.textContent="";
+        ReplyMsg.textContent = "";
     }
 
     ws.onclose = function (e) {
@@ -57,7 +57,7 @@ function testWsConnect() {
 
     ws.onmessage = function (e) {
         let message = e.data;
-        ReplyMsg.insertAdjacentHTML("beforeend","<div>" + message + "</div>")
+        ReplyMsg.insertAdjacentHTML("beforeend", "<div>" + message + "</div>")
         ReplyMsg.scrollTo(0, ReplyMsg.scrollHeight);
     }
 
@@ -70,7 +70,7 @@ function testWsConnect() {
         MsgInput.value = "";
     }
 
-    function wsClose(){
+    function wsClose() {
         ws.close();
     }
 
@@ -80,7 +80,7 @@ function testWsConnect() {
         }
     }
 
-    function removeAllEventListener(){
+    function removeAllEventListener() {
         WsConnectClose.removeEventListener("click", wsClose);
         WsSendMsg.removeEventListener("click", wsSendMsg);
         MsgInput.removeEventListener("keypress", keypress);

@@ -27,7 +27,7 @@ type UserToken struct {
 	UpdateTime  time.Time
 	ExpiredTime time.Time
 	Token       string
-	ws          *websocket.Conn
-	inGroup     bool
+	Ws          *websocket.Conn `json:"-"`
+	InGroup     bool            `json:"-"`
 	Group       string
 }

@@ -7,8 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"log"
-	"net/http"
-	"time"
 )
 
 func createMyRender() multitemplate.Renderer {
@@ -65,7 +63,7 @@ func myToken(c *gin.Context) {
 	c.JSON(200, a)
 }
 
-func SocketHandler(c *gin.Context) {
+/*func SocketHandler(c *gin.Context) {
 	upGrader := websocket.Upgrader{
 		CheckOrigin: func(r *http.Request) bool {
 			return true
@@ -109,5 +107,23 @@ func SocketHandler(c *gin.Context) {
 		if err != nil {
 			log.Println(err)
 		}
+	}
+}*/
+
+func SocketHandler(c *gin.Context) {
+	ws, err := genWebSocket(c)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	defer func(ws *websocket.Conn) {
+		_ = ws.Close()
+	}(ws)
+	for {
+		msgType, msg, err := ws.ReadMessage()
+		if err != nil {
+			break
+		}
+		fmt.Println(msgType, string(msg))
 	}
 }

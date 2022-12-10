@@ -58,7 +58,7 @@ func wsLogin(ws *websocket.Conn, login *struct {
 	Group string `json:"Group"`
 }) bool {
 	userToken, ok := tokenCheck(login.Token)
-	if !ok || userToken.inGroup {
+	if !ok || userToken.InGroup {
 		return false
 	}
 	err := wsConnectGroupJoin(ws, userToken, login.Group)
@@ -76,8 +76,8 @@ func wsConnectGroupJoin(ws *websocket.Conn, token *UserToken, g string) error {
 		wsConnectGroups[g] = []*UserToken{}
 		wsConnectGroups[g] = append(wsConnectGroups[g], token)
 	}
-	token.ws = ws
-	token.inGroup = true
+	token.Ws = ws
+	token.InGroup = true
 	token.Group = g
 	return nil
 }
@@ -123,8 +123,8 @@ func wsLoginAuthentication(ws *websocket.Conn) (bool, string) {
 
 func wsLogout(ws *websocket.Conn, group string) {
 	for i, v := range wsConnectGroups[group] {
-		if v.ws == ws {
-			wsConnectGroups[group][i].inGroup = false
+		if v.Ws == ws {
+			wsConnectGroups[group][i].InGroup = false
 			wsConnectGroups[group][i].Group = ""
 			wsConnectGroups[group] = append(wsConnectGroups[group][:i], wsConnectGroups[group][i+1:]...)
 			break
