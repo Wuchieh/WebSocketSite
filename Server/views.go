@@ -111,14 +111,22 @@ func myToken(c *gin.Context) {
 }*/
 
 func SocketHandler(c *gin.Context) {
+	// 建立連線
 	ws, err := genWebSocket(c)
 	if err != nil {
 		log.Println(err)
 		return
 	}
+
+	// 連線關閉
 	defer func(ws *websocket.Conn) {
-		_ = ws.Close()
+		wsClose(ws)
 	}(ws)
+
+	// 登入
+	wsLogin(ws)
+
+	// 開始工作
 	for {
 		msgType, msg, err := ws.ReadMessage()
 		if err != nil {

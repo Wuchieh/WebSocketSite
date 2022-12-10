@@ -17,3 +17,11 @@ func genWebSocket(c *gin.Context) (*websocket.Conn, error) {
 	ws, err := upGrader.Upgrade(c.Writer, c.Request, nil)
 	return ws, err
 }
+
+func wsClose(ws *websocket.Conn) {
+	_ = ws.Close()
+}
+
+func wsLogin(ws *websocket.Conn) {
+
+}
