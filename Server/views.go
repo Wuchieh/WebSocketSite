@@ -1,7 +1,6 @@
 package Server
 
 import (
-	"fmt"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -60,7 +59,15 @@ func myToken(c *gin.Context) {
 	session := sessions.Default(c)
 	userToken := session.Get("userToken")
 	a := userTokens[userToken.(string)]
-	c.JSON(200, a)
+	data := gin.H{
+		"CreateTime":  a.CreateTime,
+		"UpdateTime":  a.UpdateTime,
+		"ExpiredTime": a.ExpiredTime,
+		"Token":       a.Token,
+		"InGroup":     a.InGroup,
+		"Group":       a.Group,
+	}
+	c.JSON(200, data)
 }
 
 /*func SocketHandler(c *gin.Context) {
@@ -118,20 +125,19 @@ func SocketHandler(c *gin.Context) {
 		return
 	}
 
-	// 連線關閉
-	defer func(ws *websocket.Conn) {
-		wsClose(ws)
-	}(ws)
+	var userToken *UserToken
+	var ok bool
 
 	// 登入
-	wsLogin(ws)
+	if userToken, ok = wsLogin(ws); !ok {
+		return
+	}
+
+	// 連線關閉
+	defer func(ws *websocket.Conn) {
+		wsClose(ws, userToken)
+	}(ws)
 
 	// 開始工作
-	for {
-		msgType, msg, err := ws.ReadMessage()
-		if err != nil {
-			break
-		}
-		fmt.Println(msgType, string(msg))
-	}
+	wsProcess(ws, userToken)
 }

@@ -29,5 +29,5 @@ type UserToken struct {
 	Token       string
 	Ws          *websocket.Conn `json:"-"`
 	InGroup     bool            `json:"-"`
-	Group       string
+	Group       string          `json:"-"`
 }

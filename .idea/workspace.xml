@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="修改整合websocket">
-      <change afterPath="$PROJECT_DIR$/Build for linux.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebSocketSite" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebSocketSite.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="Update .gitignore">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/otherFunc.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/otherFunc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/otherFunc.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/UserToken.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/vars.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/vars.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/views.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/views.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/webSocket.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/webSocket.go" afterDir="false" />
     </list>
@@ -77,12 +74,29 @@
   }
 }</component>
   <component name="RunManager">
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="WebSocketSite" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build github.com/Wuchieh/WebSocketSite" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
       <module name="WebSocketSite" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="DIRECTORY" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="WebSocketSite" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
       <method v="2" />
     </configuration>
   </component>
@@ -114,7 +128,8 @@
     <MESSAGE value="新增限制 一個token只能進行一個連線" />
     <MESSAGE value="減少寫入存檔次數" />
     <MESSAGE value="修改整合websocket" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改整合websocket" />
+    <MESSAGE value="Update .gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update .gitignore" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
