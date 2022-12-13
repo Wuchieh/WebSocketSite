@@ -1,0 +1,75 @@
+{{ template "base.html" }}
+{{ define "body" }}
+    <div class="container">
+        <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand text-start d-none d-lg-block" href="#">
+                    <img src="/statics/imgs/websocket-logo-1280x720.png" alt="" width="30" height="24"
+                         class="d-inline-block align-text-top">
+                </a>
+                <a class="navbar-brand text-start d-lg-none" href="#">
+                    <img src="/statics/imgs/websocket-logo-1280x720.png" alt="" width="30" height="24"
+                         class="d-inline-block align-text-top">
+                    主頁
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                        aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                            <a class="nav-link d-none d-lg-block" href="/admin">主頁</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/admin/test">Link</a>
+                        </li>
+
+                        {{/*<!-- 下落式選單 -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Link
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>*/}}
+
+                    </ul>
+                    {{/*<!--搜尋框-->
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit">Search</button>
+                    </form>*/}}
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col text-center">
+                <img src="/statics/imgs/v2-dce5efe2fabea11cd518a348304ca8f2_b.gif" alt="img">
+            </div>
+        </div>
+    </div>
+{{ end }}
+{{ define "footer" }}
+    <script>
+        const navbarUl = document.querySelector("#navbar ul");
+        const hyperlinks = navbarUl.querySelectorAll("li a");
+        (function () {
+            for (const li of hyperlinks) {
+                if (location.href === li.href) {
+                    li.classList.add("active");
+                } else {
+                    li.classList.remove("active")
+                }
+            }
+        }())
+
+        function test() {
+            window.location.href = "www.mysite.com/page2.php";  // Sadly this reloads
+        }
+    </script>
+{{ end }}

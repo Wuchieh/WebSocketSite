@@ -20,6 +20,7 @@ type Setting struct {
 	CheckExpiredTime int    `json:"checkExpiredTime"`
 	ExpiredTime      int    `json:"expiredTime"`
 	Mode             int    `json:"mode"`
+	AdminPWD         string `json:"adminPWD"`
 }
 
 type UserToken struct {
@@ -30,4 +31,5 @@ type UserToken struct {
 	Ws          *websocket.Conn `json:"-"`
 	InGroup     bool            `json:"-"`
 	Group       string          `json:"-"`
+	Admin       bool
 }

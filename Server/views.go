@@ -11,6 +11,7 @@ import (
 func createMyRender() multitemplate.Renderer {
 	r := multitemplate.NewRenderer()
 	r.AddFromFiles("index", "templates/base.html", "templates/index.html")
+	r.AddFromFiles("adminPage", "templates/base.html", "templates/adminDataBase.html")
 	return r
 }
 
@@ -59,6 +60,10 @@ func myToken(c *gin.Context) {
 	session := sessions.Default(c)
 	userToken := session.Get("userToken")
 	a := userTokens[userToken.(string)]
+	if a == nil {
+		c.Redirect(302, "/")
+		return
+	}
 	data := gin.H{
 		"CreateTime":  a.CreateTime,
 		"UpdateTime":  a.UpdateTime,
@@ -69,53 +74,6 @@ func myToken(c *gin.Context) {
 	}
 	c.JSON(200, data)
 }
-
-/*func SocketHandler(c *gin.Context) {
-	upGrader := websocket.Upgrader{
-		CheckOrigin: func(r *http.Request) bool {
-			return true
-		},
-		ReadBufferSize:  1024,
-		WriteBufferSize: 1024,
-	}
-	ws, err := upGrader.Upgrade(c.Writer, c.Request, nil)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	ok, group := wsLoginAuthentication(ws)
-	if ok {
-	} else {
-		_ = ws.WriteMessage(1, []byte("登入失敗，請重新連線"))
-		time.Sleep(5 * time.Second)
-		ws.Close()
-		return
-	}
-	_ = ws.WriteMessage(1, []byte("登入成功"))
-	defer func(ws *websocket.Conn) {
-		wsLogout(ws, group)
-		err := ws.Close()
-		if err != nil {
-			return
-		}
-	}(ws)
-	for {
-		msgType, msg, err := ws.ReadMessage()
-		if err != nil || msgType == -1 {
-			break
-		}
-		sprintf := fmt.Sprintf("Message Type: %d, Message: %s", msgType, string(msg))
-		fmt.Println(sprintf)
-		err = ws.WriteJSON(struct {
-			Reply string `json:"reply"`
-		}{
-			Reply: sprintf,
-		})
-		if err != nil {
-			log.Println(err)
-		}
-	}
-}*/
 
 func SocketHandler(c *gin.Context) {
 	// 建立連線
@@ -140,4 +98,42 @@ func SocketHandler(c *gin.Context) {
 
 	// 開始工作
 	wsProcess(ws, userToken)
+}
+
+func adminPage(c *gin.Context) {
+	session := sessions.Default(c)
+	u := session.Get("userToken")
+	if u == nil {
+		c.Redirect(302, "/")
+		return
+	}
+
+	userToken := u.(string)
+	user := userTokens[userToken]
+
+	if user == nil {
+		c.Redirect(302, "/")
+		return
+	}
+
+	if !func() bool {
+		if user.Admin == false {
+			if c.Query("adminPWD") != setting.AdminPWD {
+				return false
+			} else {
+				user.Admin = true
+				c.Redirect(302, "/admin")
+				return true
+			}
+		} else {
+			return true
+		}
+	}() {
+		c.Redirect(302, "/")
+	}
+	if len(c.Request.URL.Query()) != 0 {
+		c.Redirect(302, "/admin")
+		return
+	}
+	c.HTML(200, "adminPage", gin.H{"title": "管理端"})
 }
