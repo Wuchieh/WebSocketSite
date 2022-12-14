@@ -1,16 +1,20 @@
 {{ template "base.html" }}
+{{ define "head" }}
+    <script src="/statics/js/utils.js"></script>
+    <script src="/statics/js/chart.js"></script>
+{{ end }}
 {{ define "body" }}
     <div class="container">
         <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid">
-                <a class="navbar-brand text-start d-none d-lg-block" href="#">
+                <a class="navbar-brand text-start d-none d-lg-block" href="/admin" onclick="preventRedirect(href);return false;">
                     <img src="/statics/imgs/websocket-logo-1280x720.png" alt="" width="30" height="24"
                          class="d-inline-block align-text-top">
                 </a>
-                <a class="navbar-brand text-start d-lg-none" href="#">
+                <a class="navbar-brand text-start d-lg-none" href="/admin" onclick="preventRedirect(href);return false;">
                     <img src="/statics/imgs/websocket-logo-1280x720.png" alt="" width="30" height="24"
                          class="d-inline-block align-text-top">
-                    主頁
+                    管理頁面
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                         aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,10 +23,10 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                         <li class="nav-item">
-                            <a class="nav-link d-none d-lg-block" href="/admin">主頁</a>
+                            <a class="nav-link d-none d-lg-block" href="/admin" onclick="preventRedirect(href);return false;">主頁</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/admin/test">Link</a>
+                            <a class="nav-link active" href="/admin/chart" onclick="preventRedirect(href);return false;">圖表</a>
                         </li>
 
                         {{/*<!-- 下落式選單 -->
@@ -47,29 +51,51 @@
                 </div>
             </div>
         </nav>
-        <div class="row">
-            <div class="col text-center">
-                <img src="/statics/imgs/v2-dce5efe2fabea11cd518a348304ca8f2_b.gif" alt="img">
-            </div>
-        </div>
+        <div id="content"></div>
     </div>
 {{ end }}
 {{ define "footer" }}
     <script>
+        function preventRedirect(href) {
+            history.pushState({},"",href)
+            onLoad();
+        }
+    </script>
+    <script>
         const navbarUl = document.querySelector("#navbar ul");
         const hyperlinks = navbarUl.querySelectorAll("li a");
-        (function () {
+
+        function getContent(path) {
+            const xhr = new XMLHttpRequest();
+            const content = document.getElementById("content");
+            xhr.open("POST","/api/getContent");
+            xhr.onload = function () {
+                content.innerHTML=xhr.responseText;
+                const regex = /<script[^>]*>([\s\S]*?)<\/script>/gi;
+                const match = regex.exec(xhr.responseText);
+                if (match === null){
+                    return
+                }
+                const script = match[1]; // JavaScript code
+                eval(script);
+            }
+            xhr.onerror=function (){
+                content.innerHTML="<h1>加載錯誤</h1>";
+            }
+            xhr.send(path);
+        }
+
+        function onLoad() {
             for (const li of hyperlinks) {
                 if (location.href === li.href) {
                     li.classList.add("active");
                 } else {
-                    li.classList.remove("active")
+                    li.classList.remove("active");
                 }
             }
-        }())
-
-        function test() {
-            window.location.href = "www.mysite.com/page2.php";  // Sadly this reloads
+            getContent(location.pathname);
         }
+
+        onLoad()
     </script>
 {{ end }}

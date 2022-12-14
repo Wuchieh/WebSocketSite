@@ -81,6 +81,9 @@ func wsLogin(ws *websocket.Conn) (userToken *UserToken, b bool) {
 func wsProcess(ws *websocket.Conn, userToken *UserToken) {
 	for {
 		_, msg, err := ws.ReadMessage()
+		if string(msg) == "/close" {
+			break
+		}
 		if err != nil {
 			log.Println(err)
 			return

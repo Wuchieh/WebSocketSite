@@ -1,17 +1,21 @@
 package Server
 
 import (
+	"fmt"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"io"
 	"log"
 )
 
 func createMyRender() multitemplate.Renderer {
 	r := multitemplate.NewRenderer()
 	r.AddFromFiles("index", "templates/base.html", "templates/index.html")
-	r.AddFromFiles("adminPage", "templates/base.html", "templates/adminDataBase.html")
+	r.AddFromFiles("adminPage", "templates/base.html", "templates/adminBase.html")
+	r.AddFromFiles("adminIndex", "templates/adminIndex.html")
+	r.AddFromFiles("adminChart", "templates/adminChart.html")
 	return r
 }
 
@@ -136,4 +140,21 @@ func adminPage(c *gin.Context) {
 		return
 	}
 	c.HTML(200, "adminPage", gin.H{"title": "管理端"})
+}
+
+func getContent(c *gin.Context) {
+	readAll, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		return
+	}
+	path := string(readAll)
+	switch path {
+	case "/admin":
+		c.HTML(200, "adminIndex", nil)
+	case "/admin/chart":
+		c.HTML(200, "adminChart", nil)
+	default:
+		fmt.Println(path)
+		log.Println("出現例外情況")
+	}
 }
