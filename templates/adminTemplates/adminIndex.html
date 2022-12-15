@@ -1,5 +1,61 @@
 <div class="row justify-content-center">
-  <div class="col text-center">
-    <img src="/statics/imgs/v2-dce5efe2fabea11cd518a348304ca8f2_b.gif" alt="img">
-  </div>
+    <div id="test" class="col-4 list-group d-flex overflow-auto" style="max-height: 22rem;">
+        <a class="list-group-item list-group-item-action active" aria-current="true">
+            Token清單
+        </a>
+        {{ range $key, $value := .userTokens }}
+            <a href="javascript:void(0)" onclick="getTokenInfo({{ $key }})"
+               class="list-group-item list-group-item-action">{{ $key }}</a>
+        {{ end }}
+    </div>
+    <div class="col-4 text-center">
+        <img class="img-thumbnail" src="/statics/imgs/v2-dce5efe2fabea11cd518a348304ca8f2_b.gif" alt="img">
+    </div>
+    <div id="userTokensInfo" class="col-4">
+        {{ range $key, $value := .userTokens }}
+            <div id="{{ $key }}" class="userInfo d-none">
+                <p>CreateTime: <a class="CreateTime text-dark text-decoration-none">{{ $value.CreateTime | timeFormat }}</a></p>
+                <p>UpdateTime: <a class="UpdateTime text-dark text-decoration-none">{{ $value.UpdateTime | timeFormat }}</a></p>
+                <p>ExpiredTime: <a class="ExpiredTime text-dark text-decoration-none">{{ $value.ExpiredTime | timeFormat }}</a></p>
+                <p>Token: <a class="Token text-dark text-decoration-none">{{ $value.Token }}</a></p>
+                <p>InGroup: {{ $value.InGroup }}</p>
+                <p>Group: {{ $value.Group }}</p>
+            </div>
+        {{ end }}
+        <div id="tokenEditBtnGroup" class="d-none">
+            <div class="btn-group">
+                <button id="updateTokenBtn" class="btn btn-primary" onclick="adminUpdateToken()">更新Token</button>
+                <button id="removeTokenBtn" class="btn btn-danger" onclick="adminRemoveToken()">刪除</button>
+            </div>
+            <div class="input-group mt-3">
+                <input id="editExpiredTimeInput" type="datetime-local" class="form-control">
+                <button id="editExpiredTimeBtn" class="btn btn-info" onclick="adminEditExpiredTime()">修改過期時間</button>
+            </div>
+        </div>
+    </div>
 </div>
+<style>
+    /* 滚动槽 */
+    #test::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    #test::-webkit-scrollbar-track {
+        border-radius: 3px;
+        background: rgba(0, 0, 0, 0.06);
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.08);
+    }
+
+    /* 滚动条滑块 */
+    #test::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background: rgba(0, 0, 0, 0.12);
+        -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /*作者：是你的山楂*/
+    /*链接：https://juejin.cn/post/6844903613936959496*/
+    /*来源：稀土掘金*/
+    /*著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。*/
+</style>

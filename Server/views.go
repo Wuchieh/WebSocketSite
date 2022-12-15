@@ -6,20 +6,27 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"html/template"
 	"io"
 	"log"
 	"os"
+	"strconv"
+	"time"
 )
 
 func createMyRender() multitemplate.Renderer {
 	r := multitemplate.NewRenderer()
 	r.AddFromFiles("index", "templates/base.html", "templates/index.html")
 	r.AddFromFiles("adminPage", "templates/base.html", "templates/adminTemplates/adminBase.html")
-	r.AddFromFiles("adminIndex", "templates/adminTemplates/adminIndex.html")
+	r.AddFromFilesFuncs("adminIndex", template.FuncMap{
+		"timeFormat": timeFormat,
+	}, "templates/adminTemplates/adminIndex.html")
 	r.AddFromFiles("adminChart", "templates/adminTemplates/adminChart.html")
 	return r
 }
-
+func timeFormat(t time.Time) string {
+	return t.Format("2006-01-02-15-04-05")
+}
 func index(c *gin.Context) {
 	session := sessions.Default(c)
 	userToken := session.Get("userToken")
@@ -62,6 +69,7 @@ func getNewToken(c *gin.Context) {
 }
 
 func myToken(c *gin.Context) {
+	//time.Now().Format("2006-01-02-15-04-05")
 	session := sessions.Default(c)
 	userToken := session.Get("userToken")
 	a := userTokens[userToken.(string)]
@@ -151,7 +159,7 @@ func getContent(c *gin.Context) {
 	path := string(readAll)
 	switch path {
 	case "/admin":
-		c.HTML(200, "adminIndex", nil)
+		c.HTML(200, "adminIndex", gin.H{"userTokens": userTokens})
 	case "/admin/chart":
 		c.HTML(200, "adminChart", nil)
 	default:
@@ -215,4 +223,42 @@ func saveAll(c *gin.Context) {
 	}
 	ScheduleChannel <- 1
 	c.AbortWithStatus(200)
+}
+
+func adminEditExpiredTime(c *gin.Context) {
+	// 驗證是否傭有管理員權限
+	session := sessions.Default(c)
+	userToken := session.Get("userToken").(string)
+	if userTokens[userToken] == nil || !userTokens[userToken].Admin {
+		c.JSON(404, gin.H{})
+		return
+	}
+
+	// 讀取接收到的信息
+	bytes, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		c.JSON(200, gin.H{"status": "false", "msg": err.Error()})
+		return
+	}
+
+	// 格式化
+	var s map[string]string
+	err = json.Unmarshal(bytes, &s)
+	if err != nil {
+		c.JSON(200, gin.H{"status": "false", "msg": err.Error()})
+		return
+	}
+	timeNumber, err := strconv.Atoi(s["time"][:len(s["time"])-3])
+	if err != nil {
+		c.JSON(200, gin.H{"status": "false", "msg": err.Error()})
+		return
+	}
+
+	// 轉換為時間格式
+	unixTimestamp := int64(timeNumber)
+	t := time.Unix(unixTimestamp, 0)
+
+	// 開始設置
+	userTokens[s["id"]].ExpiredTime = t.UTC()
+	c.JSON(200, gin.H{"status": "true", "msg": t.UTC().Format("2006-01-02-15-04-05")})
 }

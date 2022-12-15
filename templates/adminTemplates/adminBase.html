@@ -2,34 +2,38 @@
 {{ define "head" }}
     <script src="/statics/js/utils.js"></script>
     <script src="/statics/js/chart.js"></script>
+    <script src="/statics/js/adminScript.js"></script>
 {{ end }}
 {{ define "body" }}
-    <div class="container">
-        <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <div class="container-fluid">
-                <a class="navbar-brand text-start d-none d-lg-block" href="/admin" onclick="preventRedirect(href);return false;">
-                    <img src="/statics/imgs/websocket-logo-1280x720.png" alt="" width="30" height="24"
-                         class="d-inline-block align-text-top">
-                </a>
-                <a class="navbar-brand text-start d-lg-none" href="/admin" onclick="preventRedirect(href);return false;">
-                    <img src="/statics/imgs/websocket-logo-1280x720.png" alt="" width="30" height="24"
-                         class="d-inline-block align-text-top">
-                    管理頁面
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                        aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarScroll">
-                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                        <li class="nav-item">
-                            <a class="nav-link d-none d-lg-block" href="/admin" onclick="preventRedirect(href);return false;">主頁</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/admin/chart" onclick="preventRedirect(href);return false;">圖表</a>
-                        </li>
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand text-start d-none d-lg-block" href="/admin"
+               onclick="preventRedirect(href);return false;">
+                <img src="/statics/imgs/websocket-logo-1280x720.png" alt="" width="30" height="24"
+                     class="d-inline-block align-text-top">
+            </a>
+            <a class="navbar-brand text-start d-lg-none" href="/admin"
+               onclick="preventRedirect(href);return false;">
+                <img src="/statics/imgs/websocket-logo-1280x720.png" alt="" width="30" height="24"
+                     class="d-inline-block align-text-top">
+                管理頁面
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link d-none d-lg-block" href="/admin"
+                           onclick="preventRedirect(href);return false;">主頁</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/chart"
+                           onclick="preventRedirect(href);return false;">圖表</a>
+                    </li>
 
-                        {{/*<!-- 下落式選單 -->
+                    {{/*<!-- 下落式選單 -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Link
@@ -42,22 +46,40 @@
                             </ul>
                         </li>*/}}
 
-                    </ul>
-                    {{/*<!--搜尋框-->
+                </ul>
+                {{/*<!--搜尋框-->
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-light" type="submit">Search</button>
                     </form>*/}}
-                </div>
             </div>
-        </nav>
+        </div>
+    </nav>
+    <div class="container mt-5">
+
         <div id="content"></div>
     </div>
 {{ end }}
 {{ define "footer" }}
     <script>
+        window.onpopstate = function (event) {
+            // Do something else here...
+            preventRedirect(location.pathname)
+        }
+
+
+    </script>
+    <script>
+        let path = "";
+
         function preventRedirect(href) {
-            history.pushState({},"",href)
+            if (path === href) {
+                console.log("0")
+                return false
+            }
+            adminScriptGetTokenInfoClick = 0;
+            path = href
+            history.pushState({}, "", href)
             onLoad();
         }
     </script>
@@ -68,19 +90,19 @@
         function getContent(path) {
             const xhr = new XMLHttpRequest();
             const content = document.getElementById("content");
-            xhr.open("POST","/api/getContent");
+            xhr.open("POST", "/api/getContent");
             xhr.onload = function () {
-                content.innerHTML=xhr.responseText;
+                content.innerHTML = xhr.responseText;
                 const regex = /<script[^>]*>([\s\S]*?)<\/script>/gi;
                 const match = regex.exec(xhr.responseText);
-                if (match === null){
+                if (match === null) {
                     return
                 }
                 const script = match[1]; // JavaScript code
                 eval(script);
             }
-            xhr.onerror=function (){
-                content.innerHTML="<h1>加載錯誤</h1>";
+            xhr.onerror = function () {
+                content.innerHTML = "<h1>加載錯誤</h1>";
             }
             xhr.send(path);
         }

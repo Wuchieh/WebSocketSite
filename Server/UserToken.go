@@ -34,9 +34,15 @@ func genNewToken(session string) *UserToken {
 	return userTokens[session]
 }
 
-func updateToken(session string) bool {
+func updateToken(session string, admin ...bool) bool {
+	var adminUse bool
+	for _, v := range admin {
+		if v {
+			adminUse = true
+		}
+	}
 	if token, ok := userTokens[session]; ok {
-		if token.UpdateTime.Add(1*time.Minute).Unix() > time.Now().Unix() {
+		if !adminUse && token.UpdateTime.Add(1*time.Minute).Unix() > time.Now().Unix() {
 			return false
 		}
 		token.UpdateTime = time.Now()
