@@ -4,23 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="UPDATE 新增測試用例">
-      <change afterPath="$PROJECT_DIR$/Server/tokenSchedule.go" afterDir="false" />
+    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="優化存檔邏輯">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/tokenRecycle.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/vars.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/vars.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/views.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/views.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setting.json" beforeDir="false" afterPath="$PROJECT_DIR$/setting.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/js/bootstrap.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/statics/js/bootstrap.bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/js/bootstrap.esm.js" beforeDir="false" afterPath="$PROJECT_DIR$/statics/js/bootstrap.esm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/statics/js/bootstrap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/adminBase.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/adminTemplates/adminBase.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/adminChart.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/adminTemplates/adminChart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/adminIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/adminTemplates/adminIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/urls.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/urls.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +149,8 @@
     <MESSAGE value="UPDATE .gitignore" />
     <MESSAGE value="UPDATE 20221213" />
     <MESSAGE value="UPDATE 新增測試用例" />
-    <option name="LAST_COMMIT_MESSAGE" value="UPDATE 新增測試用例" />
+    <MESSAGE value="優化存檔邏輯" />
+    <option name="LAST_COMMIT_MESSAGE" value="優化存檔邏輯" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

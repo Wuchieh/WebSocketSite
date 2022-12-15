@@ -1,12 +1,14 @@
 package Server
 
 import (
+	"encoding/json"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"io"
 	"log"
+	"os"
 )
 
 func createMyRender() multitemplate.Renderer {
@@ -156,4 +158,61 @@ func getContent(c *gin.Context) {
 		log.Println("出現例外情況 path:", path)
 		c.String(404, "接收到錯誤Path")
 	}
+}
+
+func readAll(c *gin.Context) {
+	param := c.Param("PassWorld")
+	if param != setting.AdminPWD {
+		c.AbortWithStatus(404)
+		return
+	}
+	func() {
+		func() {
+			for i := 0; i < 2; i++ {
+				file, err := os.ReadFile("setting.json")
+				if err != nil {
+					log.Println(err)
+					err := os.WriteFile("setting.json", []byte("{\n  \"serverIP\": \"127.0.0.1\",\n  \"port\": \"8080\",\n  \"scheduleTime\": 60,\n  \"expiredTime\": 120,\n  \"mode\": 0,\n  \"adminPWD\": \"adminPWD\"\n}"), 0666)
+					if err != nil {
+						log.Println(err)
+					}
+					continue
+				}
+				err = json.Unmarshal(file, &setting)
+				if err != nil {
+					log.Println(err)
+					continue
+				}
+			}
+		}()
+		func() {
+			for i := 0; i < 2; i++ {
+				bytes, err := os.ReadFile("tokens.json")
+				if err != nil {
+					log.Println(err)
+					err := os.WriteFile("tokens.json", []byte("{}"), 0666)
+					if err != nil {
+						log.Println(err)
+					}
+					continue
+				}
+				err = json.Unmarshal(bytes, &userTokens)
+				if err != nil {
+					log.Println(err)
+					continue
+				}
+			}
+		}()
+	}()
+	c.AbortWithStatus(200)
+}
+
+func saveAll(c *gin.Context) {
+	param := c.Param("PassWorld")
+	if param != setting.AdminPWD {
+		c.AbortWithStatus(404)
+		return
+	}
+	ScheduleChannel <- 1
+	c.AbortWithStatus(200)
 }
