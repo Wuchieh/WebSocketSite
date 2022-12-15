@@ -1,7 +1,6 @@
 package Server
 
 import (
-	"fmt"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -13,9 +12,9 @@ import (
 func createMyRender() multitemplate.Renderer {
 	r := multitemplate.NewRenderer()
 	r.AddFromFiles("index", "templates/base.html", "templates/index.html")
-	r.AddFromFiles("adminPage", "templates/base.html", "templates/adminBase.html")
-	r.AddFromFiles("adminIndex", "templates/adminIndex.html")
-	r.AddFromFiles("adminChart", "templates/adminChart.html")
+	r.AddFromFiles("adminPage", "templates/base.html", "templates/adminTemplates/adminBase.html")
+	r.AddFromFiles("adminIndex", "templates/adminTemplates/adminIndex.html")
+	r.AddFromFiles("adminChart", "templates/adminTemplates/adminChart.html")
 	return r
 }
 
@@ -154,7 +153,7 @@ func getContent(c *gin.Context) {
 	case "/admin/chart":
 		c.HTML(200, "adminChart", nil)
 	default:
-		fmt.Println(path)
-		log.Println("出現例外情況")
+		log.Println("出現例外情況 path:", path)
+		c.String(404, "接收到錯誤Path")
 	}
 }

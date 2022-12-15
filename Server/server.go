@@ -18,7 +18,7 @@ func init() {
 			file, err := os.ReadFile("setting.json")
 			if err != nil {
 				log.Println(err)
-				err := os.WriteFile("setting.json", []byte("{\n  \"serverIP\": \"127.0.0.1\",\n  \"port\": \"8080\",\n  \"saveTime\": 60,\n  \"checkExpiredTime\": 60,\n  \"expiredTime\": 120,\n  \"mode\": 0\n}"), 0666)
+				err := os.WriteFile("setting.json", []byte("{\n  \"serverIP\": \"127.0.0.1\",\n  \"port\": \"8080\",\n  \"scheduleTime\": 60,\n  \"expiredTime\": 120,\n  \"mode\": 0,\n  \"adminPWD\": \"adminPWD\"\n}"), 0666)
 				if err != nil {
 					log.Println(err)
 				}
@@ -57,8 +57,7 @@ func init() {
 	case 2: // test
 		gin.SetMode(gin.TestMode)
 	}
-	tokenRecycle()
-	tokenSave()
+	tokenSchedule()
 }
 
 func Server() error {

@@ -11,16 +11,16 @@ var (
 	setting         Setting
 	userTokens      = make(map[string]*UserToken)
 	wsConnectGroups = make(map[string][]*UserToken)
+	ScheduleChannel = make(chan int, 1)
 )
 
-type Setting struct {
-	ServerIP         string `json:"serverIP"`
-	Port             string `json:"port"`
-	SaveTime         int    `json:"saveTime"`
-	CheckExpiredTime int    `json:"checkExpiredTime"`
-	ExpiredTime      int    `json:"expiredTime"`
-	Mode             int    `json:"mode"`
-	AdminPWD         string `json:"adminPWD"`
+type Setting struct { // setting.json 結構
+	ServerIP     string `json:"serverIP"`     // IP
+	Port         string `json:"port"`         // Port
+	ScheduleTime int    `json:"scheduleTime"` // 排程執行時間
+	ExpiredTime  int    `json:"expiredTime"`  // 過期時間 單位分鐘
+	Mode         int    `json:"mode"`         // 啟動模式 0 Debug, 1 Release, 2 Test
+	AdminPWD     string `json:"adminPWD"`     // 管理員密碼
 }
 
 type UserToken struct {

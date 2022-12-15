@@ -21,4 +21,7 @@ func main() {
 
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
 	<-sc
+
+	Server.ScheduleChannel <- 0
+	<-Server.ScheduleChannel
 }

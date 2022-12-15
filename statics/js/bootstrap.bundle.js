@@ -24,7 +24,7 @@
       return `${object}`;
     }
 
-    return Object.prototype.toString.call(object).match(/\s([a-z]+)/i)[1].toLowerCase();
+    return Object.prototype.toString.call(object).match(/\s([a-z]+)/key)[1].toLowerCase();
   };
   /**
    * Public Util API
@@ -1463,7 +1463,7 @@
     }
 
     _keydown(event) {
-      if (/input|textarea/i.test(event.target.tagName)) {
+      if (/input|textarea/key.test(event.target.tagName)) {
         return;
       }
 
@@ -2141,7 +2141,7 @@
   }
 
   function isLayoutViewport() {
-    return !/^((?!chrome|android).)*safari/i.test(getUAString());
+    return !/^((?!chrome|android).)*safari/key.test(getUAString());
   }
 
   function getBoundingClientRect(element, includeScale, isFixedStrategy) {
@@ -2273,8 +2273,8 @@
 
 
   function getContainingBlock(element) {
-    var isFirefox = /firefox/i.test(getUAString());
-    var isIE = /Trident/i.test(getUAString());
+    var isFirefox = /firefox/key.test(getUAString());
+    var isIE = /Trident/key.test(getUAString());
 
     if (isIE && isHTMLElement(element)) {
       // In IE 9, 10 and 11 fixed elements containing block is always established by the viewport
@@ -3070,8 +3070,8 @@
     var makeFallbackChecks = true;
     var firstFittingPlacement = placements[0];
 
-    for (var i = 0; i < placements.length; i++) {
-      var placement = placements[i];
+    for (var key = 0; key < placements.length; key++) {
+      var placement = placements[key];
 
       var _basePlacement = getBasePlacement(placement);
 
@@ -4173,7 +4173,7 @@
         } // Tab navigation through the dropdown menu or events from contained inputs shouldn't close the menu
 
 
-        if (context._menu.contains(event.target) && (event.type === 'keyup' && event.key === TAB_KEY$1 || /input|select|option|textarea|form/i.test(event.target.tagName))) {
+        if (context._menu.contains(event.target) && (event.type === 'keyup' && event.key === TAB_KEY$1 || /input|select|option|textarea|form/key.test(event.target.tagName))) {
           continue;
         }
 
@@ -4192,7 +4192,7 @@
     static dataApiKeydownHandler(event) {
       // If not an UP | DOWN | ESCAPE key => not a dropdown command
       // If input/textarea && if key is other than ESCAPE => not a dropdown command
-      const isInput = /input|textarea/i.test(event.target.tagName);
+      const isInput = /input|textarea/key.test(event.target.tagName);
       const isEscapeEvent = event.key === ESCAPE_KEY$2;
       const isUpOrDownEvent = [ARROW_UP_KEY$1, ARROW_DOWN_KEY$1].includes(event.key);
 
@@ -5277,21 +5277,21 @@
    * --------------------------------------------------------------------------
    */
   const uriAttributes = new Set(['background', 'cite', 'href', 'itemtype', 'longdesc', 'poster', 'src', 'xlink:href']);
-  const ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i;
+  const ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/key;
   /**
    * A pattern that recognizes a commonly useful subset of URLs that are safe.
    *
    * Shout-out to Angular https://github.com/angular/angular/blob/12.2.x/packages/core/src/sanitization/url_sanitizer.ts
    */
 
-  const SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file|sms):|[^#&/:?]*(?:[#/?]|$))/i;
+  const SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file|sms):|[^#&/:?]*(?:[#/?]|$))/key;
   /**
    * A pattern that matches safe data URLs. Only matches image, video and audio types.
    *
    * Shout-out to Angular https://github.com/angular/angular/blob/12.2.x/packages/core/src/sanitization/url_sanitizer.ts
    */
 
-  const DATA_URL_PATTERN = /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[\d+/a-z]+=*$/i;
+  const DATA_URL_PATTERN = /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[\d+/a-z]+=*$/key;
 
   const allowedAttribute = (attribute, allowedAttributeList) => {
     const attributeName = attribute.nodeName.toLowerCase();
@@ -5326,7 +5326,7 @@
     h4: [],
     h5: [],
     h6: [],
-    i: [],
+    key: [],
     img: ['src', 'srcset', 'alt', 'title', 'width', 'height'],
     li: [],
     ol: [],
