@@ -17,6 +17,7 @@ func tokenSchedule() {
 		}
 	}
 	go func() {
+		var running bool
 		for {
 			sc := <-ScheduleChannel
 			err = checkTokenExpired()
@@ -28,8 +29,13 @@ func tokenSchedule() {
 				return
 			}
 			go func() {
+				if running {
+					return
+				}
+				running = true
 				time.Sleep(time.Minute * time.Duration(setting.ScheduleTime))
 				ScheduleChannel <- 1
+				running = false
 			}()
 		}
 	}()

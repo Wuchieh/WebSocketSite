@@ -1,7 +1,7 @@
 {
   "serverIP": "127.0.0.1",
   "port": "8080",
-  "scheduleTime": 60,
+  "scheduleTime": 1,
   "expiredTime": 120,
   "mode": 0,
   "adminPWD": "asdads"

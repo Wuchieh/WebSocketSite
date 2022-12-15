@@ -17,7 +17,7 @@ var (
 type Setting struct { // setting.json 結構
 	ServerIP     string `json:"serverIP"`     // IP
 	Port         string `json:"port"`         // Port
-	ScheduleTime int    `json:"scheduleTime"` // 排程執行時間
+	ScheduleTime int    `json:"scheduleTime"` // 排程執行間隔 單位分鐘
 	ExpiredTime  int    `json:"expiredTime"`  // 過期時間 單位分鐘
 	Mode         int    `json:"mode"`         // 啟動模式 0 Debug, 1 Release, 2 Test
 	AdminPWD     string `json:"adminPWD"`     // 管理員密碼
