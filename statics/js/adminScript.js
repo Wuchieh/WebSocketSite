@@ -42,8 +42,13 @@ function adminUpdateToken(id) {
             document.querySelector("#" + id + " .ExpiredTime").text = obj["ExpiredTime"]
             document.querySelector("#" + id + " .Token").text = obj["Token"]
         } else {
-            alert("更新失敗")
+            if (obj["msg"]) {
+                alert(obj["msg"])
+            } else {
+                alert("更新失敗")
+            }
         }
+        adminButtonClick = 0;
     }
     xhr.send(id)
 }
@@ -72,6 +77,7 @@ function adminRemoveToken(id) {
         } else {
             alert(obj["msg"])
         }
+        adminButtonClick = 0;
     }
     xhr.send(id)
 }

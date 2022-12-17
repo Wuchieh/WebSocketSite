@@ -288,7 +288,7 @@ func adminUpdateTokenBtn(c *gin.Context) {
 	// 處理回傳
 	if updateToken(string(bytes), true) {
 		ut := userTokens[string(bytes)]
-		if ut != nil {
+		if ut == nil {
 			c.JSON(500, gin.H{"status": "false", "msg": "請重新加載頁面"})
 		} else {
 			c.JSON(200, gin.H{"status": "true",
