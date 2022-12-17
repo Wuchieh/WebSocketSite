@@ -159,6 +159,10 @@ function sleep(ms) {
 }
 
 async function reboot() {
+    if (adminButtonClick > 0) {
+        return
+    }
+    adminButtonClick++
     const xhr = new XMLHttpRequest()
     let modalBody = document.getElementById("modal-body")
     let progress = document.getElementById("progress")
