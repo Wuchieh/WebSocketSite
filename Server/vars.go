@@ -3,15 +3,18 @@ package Server
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"net/http"
 	"time"
 )
 
 var (
+	srv             *http.Server
 	r               *gin.Engine
 	setting         Setting
 	userTokens      = make(map[string]*UserToken)
 	wsConnectGroups = make(map[string][]*UserToken)
 	ScheduleChannel = make(chan int, 1)
+	boot            = make(chan int, 1)
 )
 
 type Setting struct { // setting.json 結構

@@ -1,9 +1,12 @@
 package Server
 
 import (
+	"context"
+	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"io"
+	"log"
+	"time"
 )
 
 func initRouter() {
@@ -19,9 +22,12 @@ func initRouter() {
 	api.POST("/getContent", getContent)
 	api.POST("/adminEditExpiredTime", adminEditExpiredTime)
 	api.POST("/adminUpdateTokenBtn", adminUpdateTokenBtn)
+	api.POST("/adminRemoveTokenBtn", adminRemoveTokenBtn)
+	api.POST("/adminSetSetting", adminSetSetting)
+	api.POST("/adminReboot", adminReboot)
 }
 
-func adminUpdateTokenBtn(c *gin.Context) {
+func adminReboot(c *gin.Context) {
 	// 驗證是否傭有管理員權限
 	session := sessions.Default(c)
 	userToken := session.Get("userToken").(string)
@@ -29,22 +35,17 @@ func adminUpdateTokenBtn(c *gin.Context) {
 		c.JSON(404, gin.H{})
 		return
 	}
-
-	// 接收信息
-	bytes, err := io.ReadAll(c.Request.Body)
+	// 重新啟動伺服器
+	<-boot
+	boot <- 1
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	defer cancel()
+	err := srv.Shutdown(ctx)
+	fmt.Println("===================================================")
+	fmt.Println("===================reboot==========================")
+	fmt.Println("===================================================")
 	if err != nil {
+		log.Println(err)
 		return
 	}
-
-	if updateToken(string(bytes), true) {
-		ut := userTokens[string(bytes)]
-		c.JSON(200, gin.H{"status": "true",
-			"CreateTime":  ut.CreateTime.Format("2006-01-02-15-04-05"),
-			"UpdateTime":  ut.UpdateTime.Format("2006-01-02-15-04-05"),
-			"ExpiredTime": ut.ExpiredTime.Format("2006-01-02-15-04-05"),
-			"Token":       ut.Token})
-	} else {
-		c.JSON(500, gin.H{"status": "false"})
-	}
-
 }

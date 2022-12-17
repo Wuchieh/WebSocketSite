@@ -1,16 +1,19 @@
 <div class="row justify-content-center">
+
     <div id="test" class="col-4 list-group d-flex overflow-auto" style="max-height: 22rem;">
         <a class="list-group-item list-group-item-action active" aria-current="true">
             Token清單
         </a>
         {{ range $key, $value := .userTokens }}
-            <a href="javascript:void(0)" onclick="getTokenInfo({{ $key }})"
+            <a id="tokenList-{{ $key }}" href="javascript:void(0)" onclick="getTokenInfo({{ $key }})"
                class="list-group-item list-group-item-action">{{ $key }}</a>
         {{ end }}
     </div>
+
     <div class="col-4 text-center">
         <img class="img-thumbnail" src="/statics/imgs/v2-dce5efe2fabea11cd518a348304ca8f2_b.gif" alt="img">
     </div>
+
     <div id="userTokensInfo" class="col-4">
         {{ range $key, $value := .userTokens }}
             <div id="{{ $key }}" class="userInfo d-none">
@@ -28,7 +31,7 @@
                 <button id="removeTokenBtn" class="btn btn-danger" onclick="adminRemoveToken()">刪除</button>
             </div>
             <div class="input-group mt-3">
-                <input id="editExpiredTimeInput" type="datetime-local" class="form-control">
+                <label for="editExpiredTimeInput"></label><input id="editExpiredTimeInput" type="datetime-local" class="form-control">
                 <button id="editExpiredTimeBtn" class="btn btn-info" onclick="adminEditExpiredTime()">修改過期時間</button>
             </div>
         </div>

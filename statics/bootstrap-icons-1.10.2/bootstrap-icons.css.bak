@@ -187,7 +187,7 @@ url("./fonts/bootstrap-icons.woff") format("woff");
 .bi-bookmarks::before { content: "\f1a4"; }
 .bi-bookshelf::before { content: "\f1a5"; }
 .bi-bootstrap-fill::before { content: "\f1a6"; }
-.bi-bootstrap-reboot::before { content: "\f1a7"; }
+.bi-bootstrap-Roboot::before { content: "\f1a7"; }
 .bi-bootstrap::before { content: "\f1a8"; }
 .bi-border-all::before { content: "\f1a9"; }
 .bi-border-bottom::before { content: "\f1aa"; }

@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"math/rand"
+	"net/http"
 	"os"
 	"time"
 )
@@ -49,32 +50,47 @@ func init() {
 			}
 		}
 	}()
-	switch setting.Mode {
-	case 0: // debug
-		gin.SetMode(gin.DebugMode)
-	case 1: // release
-		gin.SetMode(gin.ReleaseMode)
-	case 2: // test
-		gin.SetMode(gin.TestMode)
-	}
 	tokenSchedule()
 }
 
 func Server() error {
-	r = gin.Default()
-	err := r.SetTrustedProxies([]string{setting.ServerIP})
-	if err != nil {
-		return err
-	}
-	// 建立 store
-	store := cookie.NewStore([]byte("secret"))
-	// session 的名稱會在 browser 變成 cookie 的 key
-	r.Use(sessions.Sessions("mysession", store))
+	var err error
+	for {
+		switch setting.Mode {
+		case 0: // debug
+			gin.SetMode(gin.DebugMode)
+		case 1: // release
+			gin.SetMode(gin.ReleaseMode)
+		case 2: // test
+			gin.SetMode(gin.TestMode)
+		}
+		r = gin.Default()
+		err = r.SetTrustedProxies([]string{setting.ServerIP})
+		if err != nil {
+			return err
+		}
+		// 建立 store
+		store := cookie.NewStore([]byte("secret"))
+		// session 的名稱會在 browser 變成 cookie 的 key
+		r.Use(sessions.Sessions("mysession", store))
 
-	r.Static("/statics", "statics")
-	r.HTMLRender = createMyRender() //設定渲染模板
-	initRouter()                    //設定路由
-	r.StaticFile("/favicon.ico", "statics/imgs/websocket-logo-1280x720.png")
-	err = r.Run(setting.ServerIP + ":" + setting.Port)
+		r.Static("/statics", "statics")
+		r.HTMLRender = createMyRender() //設定渲染模板
+		initRouter()                    //設定路由
+		r.StaticFile("/favicon.ico", "statics/imgs/websocket-logo-1280x720.png")
+		//err = r.Run(setting.ServerIP + ":" + setting.Port)
+		srv = &http.Server{
+			Addr:    setting.ServerIP + ":" + setting.Port,
+			Handler: r,
+		}
+
+		boot <- 0
+		err = srv.ListenAndServe()
+		reboot := <-boot
+		if reboot != 0 {
+			continue
+		}
+		break
+	}
 	return err
 }

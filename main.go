@@ -13,7 +13,7 @@ func main() {
 	go func() {
 		err := Server.Server()
 		if err != nil {
-			log.Println(err)
+			log.Println("Server Error", err)
 			sc <- os.Kill
 			return
 		}

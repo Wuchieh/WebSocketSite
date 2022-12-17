@@ -193,7 +193,7 @@ $bootstrap-icons-map: (
   "bookmarks": "\f1a4",
   "bookshelf": "\f1a5",
   "bootstrap-fill": "\f1a6",
-  "bootstrap-reboot": "\f1a7",
+  "bootstrap-Roboot": "\f1a7",
   "bootstrap": "\f1a8",
   "border-all": "\f1a9",
   "border-bottom": "\f1aa",
@@ -2191,7 +2191,7 @@ $bootstrap-icons-map: (
 .bi-bookmarks::before { content: map-get($bootstrap-icons-map, "bookmarks"); }
 .bi-bookshelf::before { content: map-get($bootstrap-icons-map, "bookshelf"); }
 .bi-bootstrap-fill::before { content: map-get($bootstrap-icons-map, "bootstrap-fill"); }
-.bi-bootstrap-reboot::before { content: map-get($bootstrap-icons-map, "bootstrap-reboot"); }
+.bi-bootstrap-Roboot::before { content: map-get($bootstrap-icons-map, "bootstrap-Roboot"); }
 .bi-bootstrap::before { content: map-get($bootstrap-icons-map, "bootstrap"); }
 .bi-border-all::before { content: map-get($bootstrap-icons-map, "border-all"); }
 .bi-border-bottom::before { content: map-get($bootstrap-icons-map, "border-bottom"); }

@@ -4,12 +4,21 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="修正排程邏輯">
-      <change afterPath="$PROJECT_DIR$/statics/js/adminScript.js" afterDir="false" />
+    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="新增部分管理端功能 更新Token 修改過期時間">
+      <change afterPath="$PROJECT_DIR$/templates/adminTemplates/adminSetting.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/UserToken.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/UserToken.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/server.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/urls.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/urls.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/vars.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/vars.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/views.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/views.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/webSocket.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/webSocket.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setting.json" beforeDir="false" afterPath="$PROJECT_DIR$/setting.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/bootstrap-icons-1.10.2/bootstrap-icons.css.bak" beforeDir="false" afterPath="$PROJECT_DIR$/statics/bootstrap-icons-1.10.2/bootstrap-icons.css.bak" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/bootstrap-icons-1.10.2/bootstrap-icons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/statics/bootstrap-icons-1.10.2/bootstrap-icons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/bootstrap-icons-1.10.2/bootstrap-icons.svg" beforeDir="false" afterPath="$PROJECT_DIR$/statics/bootstrap-icons-1.10.2/bootstrap-icons.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/bootstrap-icons-1.10.2/bootstrap-reboot.svg" beforeDir="false" afterPath="$PROJECT_DIR$/statics/bootstrap-icons-1.10.2/bootstrap-reboot.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/js/adminScript.js" beforeDir="false" afterPath="$PROJECT_DIR$/statics/js/adminScript.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/adminTemplates/adminBase.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/adminTemplates/adminBase.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/adminTemplates/adminIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/adminTemplates/adminIndex.html" afterDir="false" />
     </list>
@@ -22,8 +31,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Go File" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -83,7 +92,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;discord-project&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -156,7 +165,8 @@
     <MESSAGE value="優化存檔邏輯" />
     <MESSAGE value="新增前端存檔與讀檔入口(需要密碼)" />
     <MESSAGE value="修正排程邏輯" />
-    <option name="LAST_COMMIT_MESSAGE" value="修正排程邏輯" />
+    <MESSAGE value="新增部分管理端功能 更新Token 修改過期時間" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增部分管理端功能 更新Token 修改過期時間" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

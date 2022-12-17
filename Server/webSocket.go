@@ -33,7 +33,9 @@ func wsLogout(group string, token *UserToken) {
 			break
 		}
 	}
-
+	if len(wsConnectGroups[group]) < 1 {
+		delete(wsConnectGroups, group)
+	}
 	token.Ws = nil
 	token.InGroup = false
 	token.Group = ""

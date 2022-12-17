@@ -18,9 +18,12 @@ func createMyRender() multitemplate.Renderer {
 	r := multitemplate.NewRenderer()
 	r.AddFromFiles("index", "templates/base.html", "templates/index.html")
 	r.AddFromFiles("adminPage", "templates/base.html", "templates/adminTemplates/adminBase.html")
+	r.AddFromFiles("adminSetting", "templates/adminTemplates/adminSetting.html")
+
 	r.AddFromFilesFuncs("adminIndex", template.FuncMap{
 		"timeFormat": timeFormat,
 	}, "templates/adminTemplates/adminIndex.html")
+
 	r.AddFromFiles("adminChart", "templates/adminTemplates/adminChart.html")
 	return r
 }
@@ -162,6 +165,8 @@ func getContent(c *gin.Context) {
 		c.HTML(200, "adminIndex", gin.H{"userTokens": userTokens})
 	case "/admin/chart":
 		c.HTML(200, "adminChart", nil)
+	case "/admin/setting":
+		c.HTML(200, "adminSetting", gin.H{"setting": setting})
 	default:
 		log.Println("出現例外情況 path:", path)
 		c.String(404, "接收到錯誤Path")
@@ -261,4 +266,115 @@ func adminEditExpiredTime(c *gin.Context) {
 	// 開始設置
 	userTokens[s["id"]].ExpiredTime = t.UTC()
 	c.JSON(200, gin.H{"status": "true", "msg": t.UTC().Format("2006-01-02-15-04-05")})
+}
+
+func adminUpdateTokenBtn(c *gin.Context) {
+	// 驗證是否傭有管理員權限
+	session := sessions.Default(c)
+	userToken := session.Get("userToken").(string)
+	if userTokens[userToken] == nil || !userTokens[userToken].Admin {
+		c.JSON(404, gin.H{})
+		return
+	}
+
+	// 接收信息
+	bytes, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		return
+	}
+
+	// 處理回傳
+	if updateToken(string(bytes), true) {
+		ut := userTokens[string(bytes)]
+		if ut != nil {
+			c.JSON(500, gin.H{"status": "false", "msg": "請重新加載頁面"})
+		} else {
+			c.JSON(200, gin.H{"status": "true",
+				"CreateTime":  ut.CreateTime.Format("2006-01-02-15-04-05"),
+				"UpdateTime":  ut.UpdateTime.Format("2006-01-02-15-04-05"),
+				"ExpiredTime": ut.ExpiredTime.Format("2006-01-02-15-04-05"),
+				"Token":       ut.Token})
+		}
+	} else {
+		c.JSON(500, gin.H{"status": "false"})
+	}
+
+}
+
+func adminRemoveTokenBtn(c *gin.Context) {
+	// 驗證是否傭有管理員權限
+	session := sessions.Default(c)
+	userToken := session.Get("userToken").(string)
+	if userTokens[userToken] == nil || !userTokens[userToken].Admin {
+		c.JSON(404, gin.H{})
+		return
+	}
+
+	bytes, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		return
+	}
+	// 檢查是否想刪除自己
+	if string(bytes) == userToken {
+		c.JSON(401, gin.H{"status": "false", "msg": "不可刪除自己的Token"})
+		return
+	}
+
+	// 開始進行刪除邏輯
+	token := userTokens[string(bytes)]
+	if group, ok := wsConnectGroups[token.Group]; ok {
+		for i, u := range group {
+			if u.Token == token.Token {
+				err := u.Ws.Close()
+				if err != nil {
+					log.Println(err)
+				}
+				group = append(group[:i], group[i+1:]...)
+			}
+		}
+		if len(group) < 1 {
+			delete(wsConnectGroups, token.Group)
+		}
+	}
+	delete(userTokens, string(bytes))
+	c.JSON(200, gin.H{"status": "true"})
+}
+
+func adminSetSetting(c *gin.Context) {
+	// 驗證是否傭有管理員權限
+	session := sessions.Default(c)
+	userToken := session.Get("userToken").(string)
+	if userTokens[userToken] == nil || !userTokens[userToken].Admin {
+		c.JSON(404, gin.H{})
+		return
+	}
+
+	// 接收信息
+	bytes, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Println(err)
+		c.JSON(401, gin.H{"status": "false", "msg": "接收到錯誤的資料"})
+		return
+	}
+
+	// 格式化
+	var s Setting
+	err = json.Unmarshal(bytes, &s)
+	if err != nil {
+		log.Println(err)
+		c.JSON(401, gin.H{"status": "false", "msg": "Json格式化錯誤"})
+		return
+	}
+	if s.ScheduleTime <= 0 || s.ExpiredTime <= 0 {
+		c.JSON(401, gin.H{"status": "false", "msg": "接收到錯誤的值\nScheduleTime ExpiredTime只能為整數"})
+		return
+	}
+	if s.ServerIP != setting.ServerIP || s.Port != setting.Port || s.Mode != setting.Mode {
+		c.JSON(200, gin.H{"status": "true", "msg": "已成功修改，須重啟伺服器"})
+	} else {
+		c.JSON(200, gin.H{"status": "true", "msg": "已成功修改"})
+	}
+	setting = s
+	bytes, err = json.MarshalIndent(setting, "", "  ")
+	os.WriteFile("setting.json", bytes, 0666)
 }
