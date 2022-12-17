@@ -1,7 +1,9 @@
 package Server
 
 import (
+	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -377,4 +379,27 @@ func adminSetSetting(c *gin.Context) {
 	setting = s
 	bytes, err = json.MarshalIndent(setting, "", "  ")
 	os.WriteFile("setting.json", bytes, 0666)
+}
+
+func adminReboot(c *gin.Context) {
+	// 驗證是否傭有管理員權限
+	session := sessions.Default(c)
+	userToken := session.Get("userToken").(string)
+	if userTokens[userToken] == nil || !userTokens[userToken].Admin {
+		c.JSON(404, gin.H{})
+		return
+	}
+	// 重新啟動伺服器
+	<-boot
+	boot <- 1
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	defer cancel()
+	err := srv.Shutdown(ctx)
+	fmt.Println("===================================================")
+	fmt.Println("===================reboot==========================")
+	fmt.Println("===================================================")
+	if err != nil {
+		log.Println(err)
+		return
+	}
 }
