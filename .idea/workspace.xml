@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="修正配置">
+    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="修正更新Token的錯誤邏輯">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/UserToken.go" beforeDir="false" afterPath="$PROJECT_DIR$/Server/UserToken.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/js/adminScript.js" beforeDir="false" afterPath="$PROJECT_DIR$/statics/js/adminScript.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +155,8 @@
     <MESSAGE value="新增部分管理端功能 設定及重啟" />
     <MESSAGE value="為重啟按鈕新增防抖動" />
     <MESSAGE value="修正配置" />
-    <option name="LAST_COMMIT_MESSAGE" value="修正配置" />
+    <MESSAGE value="修正更新Token的錯誤邏輯" />
+    <option name="LAST_COMMIT_MESSAGE" value="修正更新Token的錯誤邏輯" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
