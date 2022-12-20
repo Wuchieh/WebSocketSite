@@ -6,7 +6,7 @@
         </a>
         {{ range $key, $value := .userTokens }}
             <a id="tokenList-{{ $key }}" href="javascript:void(0)" onclick="getTokenInfo({{ $key }})"
-               class="list-group-item list-group-item-action">{{ $key }}</a>
+               class="list-group-item list-group-item-action overflow-hidden">{{ $key }}</a>
         {{ end }}
     </div>
 

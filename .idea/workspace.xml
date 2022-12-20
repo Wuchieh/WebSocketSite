@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="修正更新Token的錯誤邏輯">
+    <list default="true" id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="新增限制 一個token只能進行一個連線">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setting.json" beforeDir="false" afterPath="$PROJECT_DIR$/setting.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/adminTemplates/adminIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/adminTemplates/adminIndex.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,33 +17,15 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Go File" />
         <option value="JavaScript File" />
-        <option value="HTML File" />
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file://C:/Program Files/Go" />
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../Program Files/Go" />
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="dfb3320e98ed5c6228f0eaa3dd518c52d97c7b20" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="MIXED" />
-  </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="db01f677-98e0-4836-a22f-45fba2a4aaff" />
-        <option name="url" value="https://github.com/Wuchieh/WebSocketSite.git" />
-      </UrlAndAccount>
-    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -55,41 +38,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;configurable..is.expanded&quot;: &quot;false&quot;,
-    &quot;configurable.GoLibrariesConfigurable.is.expanded&quot;: &quot;true&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Jetbrains/Hyper-v5.0/Admin&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultGoTemplateProperty": "Go File",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "D:/Jetbrains/WebSocketSite",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.fileTypes"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Jetbrains\WebSocketSite\templates" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Jetbrains\WebSocketSite\templates\adminTemplates" />
-    </key>
-  </component>
+}]]></component>
   <component name="RunManager">
     <configuration name="go build github.com/Wuchieh/WebSocketSite" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
       <module name="WebSocketSite" />
@@ -101,20 +69,6 @@
     </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
-  <component name="TaskManager">
-    <task active="true" id="Default" summary="默认任务">
-      <changelist id="0b642ebe-672f-46a0-9f53-b8f0daf7c9e4" name="变更" comment="修改網頁" />
-      <created>1670835283663</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1670835283663</updated>
-      <workItem from="1670835284967" duration="120000" />
-      <workItem from="1670855665153" duration="905000" />
-      <workItem from="1670856620644" duration="626000" />
-      <workItem from="1671016929924" duration="5000" />
-    </task>
-    <servers />
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
@@ -140,23 +94,7 @@
     <MESSAGE value="測試" />
     <MESSAGE value="新增斷線處理" />
     <MESSAGE value="新增限制 一個token只能進行一個連線" />
-    <MESSAGE value="減少寫入存檔次數" />
-    <MESSAGE value="修改整合websocket" />
-    <MESSAGE value="Update .gitignore" />
-    <MESSAGE value="Update" />
-    <MESSAGE value="修改網頁" />
-    <MESSAGE value="UPDATE .gitignore" />
-    <MESSAGE value="UPDATE 20221213" />
-    <MESSAGE value="UPDATE 新增測試用例" />
-    <MESSAGE value="優化存檔邏輯" />
-    <MESSAGE value="新增前端存檔與讀檔入口(需要密碼)" />
-    <MESSAGE value="修正排程邏輯" />
-    <MESSAGE value="新增部分管理端功能 更新Token 修改過期時間" />
-    <MESSAGE value="新增部分管理端功能 設定及重啟" />
-    <MESSAGE value="為重啟按鈕新增防抖動" />
-    <MESSAGE value="修正配置" />
-    <MESSAGE value="修正更新Token的錯誤邏輯" />
-    <option name="LAST_COMMIT_MESSAGE" value="修正更新Token的錯誤邏輯" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增限制 一個token只能進行一個連線" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
