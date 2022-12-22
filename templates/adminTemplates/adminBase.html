@@ -1,24 +1,23 @@
 {{ template "base.html" }}
 {{ define "head" }}
     <script src="/statics/js/utils.js"></script>
+    <meta charset="utf-8">
     <script src="/statics/js/chart.js"></script>
     <script src="/statics/js/adminScript.js"></script>
-        <style>
-            html,body{
-                background-color: #f5f5f5;
-            }
-        </style>
+    <style>
+        html, body {
+            background-color: #f5f5f5;
+        }
+    </style>
 {{ end }}
 {{ define "body" }}
     <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand text-start d-none d-lg-block" href="/admin"
-               onclick="preventRedirect(href);return false;">
+            <a class="navbar-brand text-start d-none d-lg-block" href="/admin">
                 <img src="/statics/imgs/websocket-logo-1280x720.png" alt="" width="30" height="24"
                      class="d-inline-block align-text-top">
             </a>
-            <a class="navbar-brand text-start d-lg-none" href="/admin"
-               onclick="preventRedirect(href);return false;">
+            <a class="navbar-brand text-start d-lg-none" href="/admin">
                 <img src="/statics/imgs/websocket-logo-1280x720.png" alt="" width="30" height="24"
                      class="d-inline-block align-text-top">
                 管理頁面
@@ -30,16 +29,13 @@
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item">
-                        <a class="nav-link d-none d-lg-block" href="/admin"
-                           onclick="preventRedirect(href);return false;">主頁</a>
+                        <a class="nav-link d-none d-lg-block" href="/admin">主頁</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/admin/setting"
-                           onclick="preventRedirect(href);return false;">設定</a>
+                        <a class="nav-link" href="/admin/setting">設定</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/admin/chart"
-                           onclick="preventRedirect(href);return false;">圖表</a>
+                        <a class="nav-link" href="/admin/chart">圖表</a>
                     </li>
 
                     {{/*<!-- 下落式選單 -->
@@ -69,6 +65,72 @@
         <div id="content"></div>
     </div>
 {{ end }}
+
+{{ define "footer" }}
+    <script>
+        // 獲取所有的 a 標籤
+        const links = document.querySelectorAll('a')
+        window.onpopstate = (e) => {
+            doRoute();
+        }
+        // 對所有的 a 標籤設置事件監聽器
+        links.forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault()
+                let href = location.href;
+                if (href === link.href) {
+                    return
+                }
+                RemoveTheClassActiveTagFromAllLinks()
+                history.pushState(null, null, link.href)
+                setActiveTag()
+                doRoute()
+            })
+        })
+
+        function RemoveTheClassActiveTagFromAllLinks() {
+            links.forEach(link => {
+                link.classList.remove("active")
+            })
+        }
+
+        function doRoute() {
+            let path = location.pathname;
+            const xhr = new XMLHttpRequest();
+            const content = document.getElementById("content");
+            xhr.open("POST", "/api/getContent");
+            xhr.onload = function () {
+                content.innerHTML = xhr.responseText;
+                const regex = /<script[^>]*>([\s\S]*?)<\/script>/gi;
+                const match = regex.exec(xhr.responseText);
+                if (match === null) {
+                    return
+                }
+                const script = match[1]; // JavaScript code
+                eval(script);
+            }
+            xhr.onerror = function () {
+                content.innerHTML = "<h1>加載錯誤</h1>";
+            }
+            xhr.send(path);
+        }
+
+        function setActiveTag() {
+            links.forEach(link => {
+                if (link.href === location.href) {
+                    link.classList.add("active")
+                }
+            })
+        }
+
+        (function () {
+            doRoute()
+            RemoveTheClassActiveTagFromAllLinks()
+            setActiveTag();
+        })()
+    </script>
+{{ end }}
+{{/*
 {{ define "footer" }}
     <script>
         window.onpopstate = function (event) {
@@ -130,3 +192,4 @@
         onLoad()
     </script>
 {{ end }}
+*/}}
