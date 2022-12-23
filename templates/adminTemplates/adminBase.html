@@ -71,7 +71,9 @@
         // 獲取所有的 a 標籤
         const links = document.querySelectorAll('a')
         window.onpopstate = (e) => {
-            doRoute();
+            doRoute()
+            RemoveTheClassActiveTagFromAllLinks()
+            setActiveTag();
         }
         // 對所有的 a 標籤設置事件監聽器
         links.forEach(link => {
